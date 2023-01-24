@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express.Router();
 const Job = require('../models/job.model');
+const Applied = require('../models/applied.model');
 
 app.get('/', async (req, res) => {
     try {
@@ -10,6 +11,18 @@ app.get('/', async (req, res) => {
         res.status(500).send({ message: "Error Fetching Jobs" })
     }
 })
+
+app.get('/applied', async (req, res) => {
+    try {
+        const { email } = req.query
+        const applied = await Applied.find({ "user.email": email }).populate("job")
+        res.status(200).send({ message: "Applied Jobs Fetched Successfully", applied })
+    } catch (error) {
+        res.status(500).send({ message: "Error Fetching Applied Jobs" })
+    }
+})
+
+
 
 app.post('/', async (req, res) => {
     const { name, position, contract, location } = req.body;
