@@ -33,4 +33,34 @@ app.post('/', async (req, res) => {
     }
 })
 
+app.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const job = await Job.findByIdAndDelete(id)
+        if (job) {
+            res.status(200).send({ message: "Job Deleted Successfully", job: { name: job.name, position: job.position, contract: job.contract, location: job.location } })
+        } else {
+            res.status(401).send({ message: "Job Not Found" })
+        }
+    } catch (error) {
+        res.status(500).send({ message: "Error Deleting Job" })
+    }
+})
+
+app.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, position, contract, location } = req.body;
+    try {
+        const job = await Job.findByIdAndUpdate
+            (id, { name, position, contract, location }, { new: true })
+        if (job) {
+            res.status(200).send({ message: "Job Updated Successfully", job: { name: job.name, position: job.position, contract: job.contract, location: job.location } })
+        } else {
+            res.status(401).send({ message: "Job Not Found" })
+        }
+    } catch (error) {
+        res.status(500).send({ message: "Error Updating Job" })
+    }
+})
+
 module.exports = app;
