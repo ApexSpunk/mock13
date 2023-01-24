@@ -50,43 +50,6 @@ app.post("/login", async (req, res) => {
     }
 })
 
-app.post("/getProfile", async (req, res) => {
-    const { token } = req.body;
-    if (!token) {
-        res.status(401).send({ message: "Token Not Found" })
-    }
-    try {
-        let user = jwt.decode(token, process.env.JWT_SECRET)
-        if (user) {
-            res.status(200).send({ name: user.name, email: user.email, created: user.created })
-        } else {
-            res.status(401).send({ message: "Invalid Token" })
-        }
-    } catch (error) {
-        res.status(500).send({ message: "Login Failed Please Try Again" })
-    }
-})
-
-app.post("/calculate", async (req, res) => {
-    let { P, I, N, token } = req.body;
-    if (!token) {
-        res.status(401).send({ message: "Invalid Token" })
-    }
-    if (!I || !P || !N) {
-        res.send({ message: "Please Provide Full Details" })
-    }
-    try {
-
-        I = I / 100
-        let F = P*((((1 + I) ** N) - 1) / I)
-        res.status(200).send({ investment: Math.floor(P * N), maturity: Math.floor(F), gained: Math.floor(F - (P * N)) })
-    } catch (error) {
-        console.log(error)
-        res.status(500).send({ message: "Login Failed Please Try Again" })
-    }
-})
-
-
 
 
 app.listen(PORT, () => {
