@@ -5,7 +5,7 @@ const Job = require('../models/job.model');
 app.get('/', async (req, res) => {
     try {
         const jobs = await Job.find()
-        res.status(200).send(jobs)
+        res.status(200).send({ message: "Jobs Fetched Successfully", jobs })
     } catch (error) {
         res.status(500).send({ message: "Error Fetching Jobs" })
     }
