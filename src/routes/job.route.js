@@ -26,7 +26,7 @@ app.post('/', async (req, res) => {
                 location
             })
             await newJob.save()
-            res.status(200).send({ message: "Job Added Successfully", job: { name: newJob.name, position: newJob.position, contract: newJob.contract, location: newJob.location } })
+            res.status(200).send({ message: "Job Added Successfully", newJob })
         }
     } catch (error) {
         res.status(500).send({ message: "Error Adding Job" })
@@ -38,7 +38,7 @@ app.delete('/:id', async (req, res) => {
     try {
         const job = await Job.findByIdAndDelete(id)
         if (job) {
-            res.status(200).send({ message: "Job Deleted Successfully", job: { name: job.name, position: job.position, contract: job.contract, location: job.location } })
+            res.status(200).send({ message: "Job Deleted Successfully", job })
         } else {
             res.status(401).send({ message: "Job Not Found" })
         }
@@ -54,7 +54,7 @@ app.put('/:id', async (req, res) => {
         const job = await Job.findByIdAndUpdate
             (id, { name, position, contract, location }, { new: true })
         if (job) {
-            res.status(200).send({ message: "Job Updated Successfully", job: { name: job.name, position: job.position, contract: job.contract, location: job.location } })
+            res.status(200).send({ message: "Job Updated Successfully", job })
         } else {
             res.status(401).send({ message: "Job Not Found" })
         }
