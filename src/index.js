@@ -19,10 +19,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-
-
-
 app.listen(PORT, () => {
     connect()
     console.log(`Server is running on port ${PORT}`);
