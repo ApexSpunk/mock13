@@ -14,20 +14,14 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
     const { name, position, contract, location } = req.body;
     try {
-        const job = await Job.findOne({ name, position, contract, location })
-        if (job) {
-            res.status(401).send({ message: "Job already exists" })
-        }
-        else {
-            const newJob = new Job({
-                name,
-                position,
-                contract,
-                location
-            })
-            await newJob.save()
-            res.status(200).send({ message: "Job Added Successfully", newJob })
-        }
+        const newJob = new Job({
+            name,
+            position,
+            contract,
+            location
+        })
+        await newJob.save()
+        res.status(200).send({ message: "Job Added Successfully", newJob })
     } catch (error) {
         res.status(500).send({ message: "Error Adding Job" })
     }
