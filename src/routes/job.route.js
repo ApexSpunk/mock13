@@ -22,6 +22,17 @@ app.get('/applied', async (req, res) => {
     }
 })
 
+app.post('/apply', async (req, res) => {
+    try {
+        const { job, user } = req.body
+        const applied = await Applied.create({ job, user })
+        res.status(200).send({ message: "Applied Successfully", applied })
+    } catch (error) {
+        res.status(500).send({ message: "Error Applying" })
+    }
+})
+
+
 
 
 app.post('/', async (req, res) => {
