@@ -28,7 +28,7 @@ app.post("/register", async (req, res) => {
                 type: email.endsWith("masaischool.com") ? "admin" : "user"
             })
             await newUser.save()
-            res.status(200).send({ message: "User Signup Successful", user: { name: newUser.name, email: newUser.email, type: newUser.type } })
+            res.status(200).send({ message: `${newUser.type === "admin" ? "Admin" : "User"} Signup Successful`, user: { name: newUser.name, email: newUser.email, type: newUser.type } })
         }
     } catch (error) {
         res.status(500).send({ message: "User Signup Failed Please Try Again" })
