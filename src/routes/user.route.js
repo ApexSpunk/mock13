@@ -31,7 +31,7 @@ app.post("/login", async (req, res) => {
         const user = await User.findOne({ email, password })
         if (user) {
             let token = jwt.sign({ email, name: user.name, created: user.created }, process.env.JWT_SECRET)
-            res.status(200).send({ message: "Login Successful", user: { name: user.name, email: user.email, token } })
+            res.status(200).send({ message: "Login Successful", user: { name: user.name, email: user.email, type: user.type }, token })
         } else {
             res.status(401).send({ message: "Invalid Credentails" })
         }
